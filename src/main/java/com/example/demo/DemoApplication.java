@@ -10,6 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.example.demo.entity.Course;
+import com.example.demo.entity.Role;
 import com.example.demo.entity.Topic;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CourseRepository;
@@ -31,15 +32,15 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user1=new User("Amit", "amit");
-		User user2=new User("Sumit", "sumit");
+		User user1=new User("Mr Amit","Amit", "amit",new Role());
+		User user2=new User("Mr Sumit","Sumit", "sumit",new Role());
 		usrRepo.save(user1);
 		usrRepo.save(user2);
 		System.out.println("users successfully created------------------------------>>>>>>>");
 		User fUser;
 		if(usrRepo.findById(1).isPresent()) {
 			fUser=usrRepo.findById(1).get();
-			System.out.println("name "+fUser.getName()+"    "+fUser.getPwd());
+			System.out.println("name "+fUser.getName()+"    "+fUser.getPassword());
 		}
 		List<Topic>topics=new ArrayList<>();
 		Course course=new Course("java", "java-101", topics);

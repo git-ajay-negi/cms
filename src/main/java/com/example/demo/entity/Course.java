@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -37,6 +38,9 @@ public class Course {
 
 
 	private String courseCode;
+	
+	@ManyToMany(mappedBy="courses")
+	private List<User>users;
 	
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="course")
 	private List<Topic> topics;
