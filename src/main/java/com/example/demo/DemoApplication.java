@@ -32,8 +32,8 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user1=new User("Mr Amit","Amit", "amit",new Role());
-		User user2=new User("Mr Sumit","Sumit", "sumit",new Role());
+		User user1=new User("Mr Amit","Amit", "amit",new Role("TUTOR"));
+		User user2=new User("Mr Sumit","Sumit", "sumit",new Role("STUDENT"));
 		usrRepo.save(user1);
 		usrRepo.save(user2);
 		System.out.println("users successfully created------------------------------>>>>>>>");

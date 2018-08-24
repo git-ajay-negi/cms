@@ -8,12 +8,13 @@ import com.example.demo.entity.User;
 
 public interface TutorService {
  
-	public List<Course> getAllTutors() ;
+	public List<User> getAllTutors() ;
 	
-	public Course updateTutor(int tutorId, User user) ;
+	public User updateTutor(int tutorId, User user) ;
 	
+	public User createTutor(User tutor);
 	
+	public String deleteTutor(int tutorId);
 
 	
-	public boolean saveUser(User user);
 }

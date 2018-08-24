@@ -26,13 +26,13 @@ public class TutorCourseMap {
 	
 	private int courseId;
 	
-	@Temporal(TemporalType.DATE)
+	/*@Temporal(TemporalType.DATE)
 	private Date from;
 	
 	@Temporal(TemporalType.DATE)
 
 	private Date to;
-	
+	*/
 	private String session;
 
 	public int getId() {
@@ -59,7 +59,7 @@ public class TutorCourseMap {
 		this.courseId = courseId;
 	}
 
-	public Date getFrom() {
+	/*public Date getFrom() {
 		return from;
 	}
 
@@ -73,7 +73,7 @@ public class TutorCourseMap {
 
 	public void setTo(Date to) {
 		this.to = to;
-	}
+	}*/
 
 	public String getSession() {
 		return session;

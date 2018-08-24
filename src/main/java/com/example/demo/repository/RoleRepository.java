@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+public interface RoleRepository extends CrudRepository<Role, Integer> {
 
-	public List<User> findByRole(@Param("role")Role role);
+	public List<Role> findByRole(@Param("role")String role);
 }
