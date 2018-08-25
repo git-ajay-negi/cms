@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -36,13 +37,17 @@ public class User {
 
 	private String password;
 	
-	@OneToOne(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="roleId")
 	private Role role;
 
-	@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
+	/*@ManyToMany(cascade= {CascadeType.PERSIST,CascadeType.MERGE})
 	@JoinTable(name="user_course",joinColumns=@JoinColumn(name="userId"),inverseJoinColumns=@JoinColumn(name="courseId"))
-	private List<Course> courses;
+	private List<Course> courses;*/
+	
+	
+	@OneToMany(mappedBy="user",fetch=FetchType.LAZY)
+	List<TutorCourseMap>tutCourses;
 	
 	public User() {
 

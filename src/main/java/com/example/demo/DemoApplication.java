@@ -14,6 +14,7 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.Topic;
 import com.example.demo.entity.User;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 
 @SpringBootApplication
@@ -25,6 +26,11 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	private CourseRepository  courseRepo;
 	
+	@Autowired
+	private RoleRepository  roleRepo;
+
+	
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);;
@@ -32,10 +38,23 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		User user1=new User("Mr Amit","Amit", "amit",new Role("TUTOR"));
-		User user2=new User("Mr Sumit","Sumit", "sumit",new Role("STUDENT"));
+		Role r1=new Role("TUTOR");
+		Role r2=new Role("STUDENT");
+		Role r3=new Role("ADMIN");
+		r1=roleRepo.save(r1);
+		r2=roleRepo.save(r2);
+		r3=roleRepo.save(r3);
+
+		
+		User user1=new User("Mr Amit","Amit", "amit",r1);
+		User user2=new User("Mr Sumit","Sumit", "sumit",r2);
+		User user3=new User("Mr Rahul","Rahul", "rahul",r3);
+
 		usrRepo.save(user1);
 		usrRepo.save(user2);
+		usrRepo.save(user3);
+
+		
 		System.out.println("users successfully created------------------------------>>>>>>>");
 		User fUser;
 		if(usrRepo.findById(1).isPresent()) {
@@ -49,7 +68,7 @@ public class DemoApplication implements CommandLineRunner {
 		topics.add(new Topic("Jee", "102", "j2ee is advance java",course));
 
 		
-		 
+		 //lllll
 		
 		courseRepo.save(course);
 		

@@ -39,11 +39,22 @@ public class Course {
 
 	private String courseCode;
 	
-	@ManyToMany(mappedBy="courses")
-	private List<User>users;
+	/*@ManyToMany(mappedBy="courses")
+	private List<User>users;*/
 	
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER,mappedBy="course")
 	private List<Topic> topics;
+
+	@OneToMany(mappedBy="course",fetch=FetchType.LAZY)
+	List<TutorCourseMap>tutCourses;
+	
+	public List<TutorCourseMap> getTutCourses() {
+		return tutCourses;
+	}
+
+	public void setTutCourses(List<TutorCourseMap> tutCourses) {
+		this.tutCourses = tutCourses;
+	}
 
 	public String getCourseName() {
 		return courseName;
@@ -55,6 +66,14 @@ public class Course {
 
 	public String getCourseCode() {
 		return courseCode;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public void setCourseCode(String courseCode) {

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ApiResponse;
-import com.example.demo.dto.CalendarDto;
 import com.example.demo.entity.Course;
 import com.example.demo.entity.User;
 import com.example.demo.service.CalendarService;
@@ -20,7 +19,7 @@ import com.example.demo.service.CourseService;
 import com.example.demo.service.TutorService;
 
 @RestController
-public class TutorController {
+public class CalenderController {
 	
 	@Autowired
 	private CourseService courseService;
@@ -31,11 +30,11 @@ public class TutorController {
 	@Autowired
 	private CalendarService calendarService;
 	
-	@RequestMapping(value="/tutors",method=RequestMethod.GET)
-	public ResponseEntity<ApiResponse>  getCourses(){
+	@RequestMapping(value="/calendar/{year}",method=RequestMethod.GET)
+	public ResponseEntity<ApiResponse>  getCourses(@PathParam("year")String year){
 		ApiResponse response=new ApiResponse();
 		try {
-		response.setData(tutorService.getAllTutors());
+		response.setData(calendarService.getCalendar(year));
 		response.setStatus("ok");
 		response.setStatusCode(2000);
 		}catch(Exception e) {
@@ -48,7 +47,7 @@ public class TutorController {
 	}
 	
 	
-	@RequestMapping(value="/tutors",method=RequestMethod.POST)
+	/*@RequestMapping(value="/tutors",method=RequestMethod.POST)
 	public ResponseEntity<ApiResponse>  addTutor( @RequestBody User tutor){
 		
 		ApiResponse response=new ApiResponse();
@@ -84,26 +83,8 @@ public class TutorController {
 	}
 	
 	
-	@RequestMapping(value="/tutors/{tutorId}/courses/{courseId}",method=RequestMethod.POST)
-	public ResponseEntity<ApiResponse>  assignCourseToTutor(@PathVariable("tutorId")Integer tutorId,
-			@PathVariable("courseId")Integer courseId, @RequestBody CalendarDto calendar){
-		
-		ApiResponse response=new ApiResponse();
-		try {
-			System.out.println("value of course and tutor"+courseId+"  "+tutorId+" "+calendar.getPeriod());
-		response.setData(calendarService.assignCourseToTuor(courseId,tutorId, calendar.getPeriod()));
-		response.setStatus("Created");
-		response.setStatusCode(2000);
-		}catch(Exception e) {
-			e.printStackTrace();
-			response.setStatus("failed");
-			response.setStatusCode(1001);
-		}
-		
-		return new ResponseEntity<ApiResponse>(response, HttpStatus.CREATED);
-
-	}
 	
 	
+	*/
 
 }
