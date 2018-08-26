@@ -29,6 +29,8 @@
       </li> -->
       <li><a href="#" onclick="loadCourses()">View Courses</a></li>
        <li><a href="#" onClick="loadTutors()">View Tutors</a></li>
+              <li><a href="#" onClick="loadTutorsWithCourses()">View Tutors-Courses</a></li>
+       
        
       
     </ul>
@@ -79,7 +81,7 @@ Training Calendar for Year 2018
 
 	loadCalendar("it");
 	
-	var courses;
+	
 	 function loadCourses(){
 			console.log("executing function")
 			$.ajax({
@@ -91,7 +93,7 @@ Training Calendar for Year 2018
 
 					var tHead='<tr>     <th>Course</th><th>Code</th><th>Topics </th>  </tr>';
 					var tBody="";
-					courses=result.data;
+					
 					$.each(result.data, function (i) {
 						var tr="";
 						tr='<tr>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].courseCode+'</td>'+'<td><ul>';
@@ -139,8 +141,93 @@ Training Calendar for Year 2018
 			});
 		}
 
+	/*  function assingnCourseToTutors(courseId,tutorId,period){
+			console.log("executing function")
+			$.ajax({
+				type:"POST",
+				contentType:"application/json",
+				url: "/tutors/"+tutorId+"/course/"+courseId,
+				dataType:"json",
+				success: function(result){
+					var tBody="";
+					
+					$.each(result.data, function (i) {
+						var tr="";
+						tr='<tr>'+'<td>'+result.data[i].tutorName+'</td>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].period+'</td>'+'<tr>';
+					    console.log("first data"+i);
+					    tBody+=tBody+tr;
+					});
+		}	$('#tBody').append(tBody);
+			
+			});
 
-  
+   */
+	function loadTutorsWithCourses(){
+		
+		var courses;
+		$.ajax({
+			type:"GET",
+			contentType:"application/json",
+			url: "/courses/",
+			dataType:"json",
+			success: function(result){
+
+				courses=result.data;
+	}	
+			
+		
+		});
+		
+		setTimeout(function(){
+			
+			$.ajax({
+				type:"GET",
+				contentType:"application/json",
+				url: "/tutors/",
+				dataType:"json",
+				success: function(result){
+
+					var tHead='<tr>     <th>Tutor Id</th><th>Tutor Name</th><th>Tutor UserName </th><th>Courses</th>  </tr>';
+					var tBody="";
+					console.log("courses ------>");
+					console.log("courses ------>"+courses.length)
+					$.each(result.data, function (i) {
+						
+						console.log("inside courses ------>"+result.data.length);
+
+						var tr="";
+						tr='<tr>'+'<td>'+result.data[i].id+'</td>'+'<td>'+result.data[i].name+'</td>'+'<td>'+result.data[i].userName+'</td>'+'<td><ul>';
+						var li="";
+						$.each(courses, function (j) {
+							li+='<li><input type="checkbox" class="courseList" value="'+result.data[i].id+"-"+courses[j].id+'"> '+courses[j].courseName+'</li>';
+							console.log("inside inner loop");
+						});
+						
+					    console.log("first data"+i);
+					    tBody+=tBody+tr+li+'</ul></td>'+'<tr>';;
+						
+						
+						
+						/* var tr="";
+						tr='<tr>'+'<td>'+result.data[i].id+'</td>'+'<td>'+result.data[i].name+'</td>'+'<td>'+result.data[i].userName+'</td>'+'<tr>';
+					    console.log("first data"+i);
+					    tBody+=tBody+tr;
+					     */
+					    
+					});
+					$('#tHead').html(tHead);
+
+					$('#tBody').html(tBody);
+		}	
+				
+			
+			});
+		
+			}, 1000);
+		
+
+	
+	}
   </script>
 </body>
 </html>
