@@ -35,10 +35,10 @@ public class LoginController {
 	public String getLoginAuth(@RequestParam("name") String name,@RequestParam("pwd")String password) {
 		System.out.println("name :"+name+"  pwd  :"+password+" is valid user "+loginService.validateUser(name, password));
 		if(Objects.nonNull(userService.getByUserNameAndPassword(name, password))) {
-			if(userService.getByUserNameAndPassword(name, password).getRole().getRole().equalsIgnoreCase("STUDENT"))
-		return "welcome";
-		else
-			return "admin_dashboard";
+			if(userService.getByUserNameAndPassword(name, password).getRole().getRole().equalsIgnoreCase("ADMIN"))
+		return "admin_dashboard";
+		else 
+			return "welcome";
 		}
 		else 
 			return "index";

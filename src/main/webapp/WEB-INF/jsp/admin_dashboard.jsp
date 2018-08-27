@@ -29,7 +29,7 @@
       </li> -->
       <li><a href="#" onclick="loadCourses()">View Courses</a></li>
        <li><a href="#" onClick="loadTutors()">View Tutors</a></li>
-              <li><a href="#" onClick="loadTutorsWithCourses()">View Tutors-Courses</a></li>
+              <li><a href="#" onClick="loadTutorsWithCourses()">ManageTutors-Courses</a></li>
        
        
       
@@ -40,7 +40,7 @@
     </ul>
   </div>
 </nav>
-Training Calendar for Year 2018
+<h1>Training Calendar for Year 2018</h1>
 <table class="table">
     <thead id="tHead">
       <tr>
@@ -70,9 +70,11 @@ Training Calendar for Year 2018
 					var tr="";
 					tr='<tr>'+'<td>'+result.data[i].tutorName+'</td>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].period+'</td>'+'<tr>';
 				    console.log("first data"+i);
-				    tBody+=tBody+tr;
+				    tBody+=tr;
 				});
 				$('#tBody').append(tBody);
+				$('h1').html("Training Calendar for Year 2018");
+
 	}	
 			
 		
@@ -99,15 +101,17 @@ Training Calendar for Year 2018
 						tr='<tr>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].courseCode+'</td>'+'<td><ul>';
 						var li="";
 						$.each(result.data[i].topics, function (j) {
-							li='<li>'+result.data[i].topics[j].topicName+'</li>';
+							li+='<li>'+result.data[i].topics[j].topicName+'</li>';
 						});
-						tr=tr+li+'</ul></td>'+'<tr>';
+						tr+=li+'</ul></td>'+'<tr>';
 					    console.log("first data"+i);
-					    tBody+=tBody+tr;
+					    tBody+=tr;
 					});
 					$('#tHead').html(tHead);
 
 					$('#tBody').html(tBody);
+					$('h1').html("Available Courses");
+
 		}	
 				
 			
@@ -130,38 +134,20 @@ Training Calendar for Year 2018
 						var tr="";
 						tr='<tr>'+'<td>'+result.data[i].id+'</td>'+'<td>'+result.data[i].name+'</td>'+'<td>'+result.data[i].userName+'</td>'+'<tr>';
 					    console.log("first data"+i);
-					    tBody+=tBody+tr;
+					    tBody+=tr;
 					});
 					$('#tHead').html(tHead);
 
 					$('#tBody').html(tBody);
+					$('h1').html("Available Tutors");
+
 		}	
 				
 			
 			});
 		}
 
-	/*  function assingnCourseToTutors(courseId,tutorId,period){
-			console.log("executing function")
-			$.ajax({
-				type:"POST",
-				contentType:"application/json",
-				url: "/tutors/"+tutorId+"/course/"+courseId,
-				dataType:"json",
-				success: function(result){
-					var tBody="";
-					
-					$.each(result.data, function (i) {
-						var tr="";
-						tr='<tr>'+'<td>'+result.data[i].tutorName+'</td>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].period+'</td>'+'<tr>';
-					    console.log("first data"+i);
-					    tBody+=tBody+tr;
-					});
-		}	$('#tBody').append(tBody);
-			
-			});
-
-   */
+	
 	function loadTutorsWithCourses(){
 		
 		var courses;
@@ -199,12 +185,12 @@ Training Calendar for Year 2018
 						tr='<tr>'+'<td>'+result.data[i].id+'</td>'+'<td>'+result.data[i].name+'</td>'+'<td>'+result.data[i].userName+'</td>'+'<td><ul>';
 						var li="";
 						$.each(courses, function (j) {
-							li+='<li><input type="checkbox" class="courseList" value="'+result.data[i].id+"-"+courses[j].id+'"> '+courses[j].courseName+'</li>';
+							li+='<li><input type="checkbox" class="courseList" value="'+result.data[i].id+"-"+courses[j].id+'"> '+courses[j].courseName+'--->From:   <input type="date" id="fromDate'+courses[j].id+'" name="fromDate"> - To     <input type="date" id="toDate'+courses[j].id+'" name="toDate">'+'</li>';
 							console.log("inside inner loop");
 						});
 						
 					    console.log("first data"+i);
-					    tBody+=tBody+tr+li+'</ul></td>'+'<tr>';;
+					    tBody+=tr+li+'</ul></td>'+'<tr>';;
 						
 						
 						
@@ -228,6 +214,52 @@ Training Calendar for Year 2018
 
 	
 	}
+	
+	$(document).ready(function(){
+		
+		
+		$(document).on("click", ".courseList", function(){
+			
+			
+			var value=$(this).val().split("-");
+			console.log("value--------"+value);
+			var tutorId=value[0];
+			var courseId=value[1];
+			var fromDate=$('#fromDate'+courseId).val();
+			var toDate=$('#toDate'+courseId).val();
+			var period=fromDate+","+toDate;
+			
+			assingnCourseToTutors(courseId,tutorId,period)
+			
+		    //alert("c "+courseId+" t"+tutorId+"p "+period);
+		});
+		
+	});
+	  function assingnCourseToTutors(courseId,tutorId,period){
+	console.log("executing function")
+	var data={"period":period};
+	$.ajax({
+		type:"POST",
+		contentType:"application/json",
+		url: "/tutors/"+tutorId+"/courses/"+courseId,
+		dataType:"json",
+		data:JSON.stringify(data),
+		success: function(result){
+			var tBody="";
+			alert("Course sucessfully assigned to tutor");
+			/* $.each(result.data, function (i) {
+				var tr="";
+				tr='<tr>'+'<td>'+result.data[i].tutorName+'</td>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].period+'</td>'+'<tr>';
+			    console.log("first data"+i);
+			    tBody+=tBody+tr;
+			});
+			$('#tBody').append(tBody); */
+}	
+	
+	});
+	  }
+
+	
   </script>
 </body>
 </html>

@@ -34,14 +34,14 @@ public class TutorController {
 	@RequestMapping(value="/tutors",method=RequestMethod.GET)
 	public ResponseEntity<ApiResponse>  getCourses(){
 		ApiResponse response=new ApiResponse();
-		try {
+		//try {
 		response.setData(tutorService.getAllTutors());
 		response.setStatus("ok");
 		response.setStatusCode(2000);
-		}catch(Exception e) {
+		/*}catch(Exception e) {
 			response.setStatus("failed");
 			response.setStatusCode(1001);
-		}
+		}*/
 		
 		return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 

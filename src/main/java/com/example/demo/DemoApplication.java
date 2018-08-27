@@ -46,30 +46,36 @@ public class DemoApplication implements CommandLineRunner {
 		r3=roleRepo.save(r3);
 
 		
-		User user1=new User("Mr Amit","Amit", "amit",r1);
-		User user2=new User("Mr Sumit","Sumit", "sumit",r2);
-		User user3=new User("Mr Rahul","Rahul", "rahul",r3);
+		User user1=new User("Mr Amit","tutor", "tutor",r1);
+		User user4=new User("Mr Mohit","tutor1", "tutor1",r1);
+
+		User user2=new User("Mr Sumit","student", "student",r2);
+		User user3=new User("Mr Rahul","admin", "admin",r3);
 
 		usrRepo.save(user1);
 		usrRepo.save(user2);
 		usrRepo.save(user3);
+		usrRepo.save(user4);
 
 		
 		System.out.println("users successfully created------------------------------>>>>>>>");
-		User fUser;
-		if(usrRepo.findById(1).isPresent()) {
-			fUser=usrRepo.findById(1).get();
-			System.out.println("name "+fUser.getName()+"    "+fUser.getPassword());
-		}
+		
 		List<Topic>topics=new ArrayList<>();
 		Course course=new Course("java", "java-101", topics);
-
-		topics.add(new Topic("core", "101", "core java is core",course));
-		topics.add(new Topic("Jee", "102", "j2ee is advance java",course));
+		topics.add(new Topic("data type", "101", "about java data types",course));
+		topics.add(new Topic("inheritance", "102", "about inheritance",course));
+		topics.add(new Topic("static keyword in java", "103", "use of static keywords in java",course));
 
 		
 		 //lllll
-		
+		List<Topic>dotNetTopics=new ArrayList<>();
+	
+		Course courseDotNet=new Course("Dot net c sharp", "c-sharp-101", dotNetTopics);
+		topics.add(new Topic("method overloading", "1001", "about method overloading",courseDotNet));
+		topics.add(new Topic("delegation", "1002", "delegation in c sharp",courseDotNet));
+		topics.add(new Topic("multiple inheritance", "1003", "use of multiple inheritance",courseDotNet));
+		courseRepo.save(courseDotNet);
+
 		courseRepo.save(course);
 		
 	}

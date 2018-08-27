@@ -38,7 +38,7 @@
     </ul>
   </div>
 </nav>
-Training Calendar for Year 2018
+<h1>Training Calendar for Year 2018</h1>
 <table class="table">
     <thead id="tHead">
       <tr>
@@ -71,6 +71,8 @@ Training Calendar for Year 2018
 				    tBody+=tBody+tr;
 				});
 				$('#tBody').append(tBody);
+				$('h1').html("Training Calendar for Year 2018");
+
 	}	
 			
 		
@@ -97,15 +99,16 @@ Training Calendar for Year 2018
 						tr='<tr>'+'<td>'+result.data[i].courseName+'</td>'+'<td>'+result.data[i].courseCode+'</td>'+'<td><ul>';
 						var li="";
 						$.each(result.data[i].topics, function (j) {
-							li='<li>'+result.data[i].topics[j].topicName+'</li>';
+							li+='<li>'+result.data[i].topics[j].topicName+'</li>';
 						});
-						tr=tr+li+'</ul></td>'+'<tr>';
+						//tr=tr+li+'</ul></td>'+'<tr>';
 					    console.log("first data"+i);
-					    tBody+=tBody+tr;
+					    tBody+=tr+li+'</ul></td>'+'<tr>';;
 					});
 					$('#tHead').html(tHead);
 
 					$('#tBody').html(tBody);
+					$('h1').html("Available Courses");
 		}	
 				
 			
@@ -128,11 +131,13 @@ Training Calendar for Year 2018
 						var tr="";
 						tr='<tr>'+'<td>'+result.data[i].id+'</td>'+'<td>'+result.data[i].name+'</td>'+'<td>'+result.data[i].userName+'</td>'+'<tr>';
 					    console.log("first data"+i);
-					    tBody+=tBody+tr;
+					    tBody+=tr;
 					});
 					$('#tHead').html(tHead);
 
 					$('#tBody').html(tBody);
+					$('h1').html("Available Tutors");
+
 		}	
 				
 			
